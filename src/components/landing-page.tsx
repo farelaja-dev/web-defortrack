@@ -23,13 +23,14 @@ import {
   Waves,
 } from "lucide-react";
 import {
+  AnimatePresence,
   motion,
   useScroll,
   useSpring,
   useTransform,
   type Variants,
 } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 const navItems = [
   { label: "Fitur", href: "#fitur" },
@@ -838,9 +839,86 @@ function Footer() {
   );
 }
 
+function InitialLoader() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const startedAt = performance.now();
+    const minDuration = 1700;
+
+    const finish = () => {
+      const elapsed = performance.now() - startedAt;
+      const remaining = Math.max(0, minDuration - elapsed);
+      window.setTimeout(() => setIsVisible(false), remaining);
+    };
+
+    if (document.readyState === "complete") {
+      finish();
+    } else {
+      window.addEventListener("load", finish, { once: true });
+    }
+
+    const fallback = window.setTimeout(finish, 2600);
+
+    return () => {
+      window.removeEventListener("load", finish);
+      window.clearTimeout(fallback);
+    };
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {isVisible ? (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, filter: "blur(12px)" }}
+          transition={{ duration: 0.65, ease: smoothEase }}
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#071811] px-6 text-white"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(31,138,112,0.34),transparent_34%),linear-gradient(180deg,#071811_0%,#0A3B2E_100%)]" />
+          <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(247,245,239,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(247,245,239,0.16)_1px,transparent_1px)] [background-size:64px_64px]" />
+          <motion.div
+            initial={{ opacity: 0, y: 22, scale: 0.94, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.75, ease: smoothEase }}
+            className="relative flex flex-col items-center"
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0], scale: [1, 1.025, 1] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              className="flex items-center justify-center rounded-[2rem] bg-[#F7F5EF] px-7 py-5 shadow-2xl shadow-black/30 ring-1 ring-white/50 sm:rounded-[2.4rem] sm:px-9 sm:py-6"
+            >
+              <Image
+                src="/images/logo.png"
+                alt="DeforTrack"
+                width={260}
+                height={104}
+                priority
+                className="h-16 w-auto object-contain sm:h-20"
+              />
+            </motion.div>
+            <div className="mt-8 h-1 w-48 overflow-hidden rounded-full bg-white/12 sm:w-60">
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
+                className="h-full w-1/2 rounded-full bg-[#F4C95D]"
+              />
+            </div>
+            <p className="mt-5 text-center text-xs font-semibold uppercase tracking-[0.22em] text-white/54 sm:text-sm">
+              Memuat
+            </p>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
 export default function LandingPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#071811] text-white">
+      <InitialLoader />
       <Header />
       <HeroStage />
       <AboutSection />

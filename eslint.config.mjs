@@ -14,6 +14,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   globalIgnores([
     ".next/**",
+    ".next.broken-favicon-cache/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
