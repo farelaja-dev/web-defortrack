@@ -1,4 +1,4 @@
-# DeForTrack Landing Page
+# DeforTrack Landing Page
 
 Website informasi publik untuk DeforTrack, sistem monitoring deforestasi dan
 pengelolaan lahan berbasis drone, laporan petani, dan dashboard peran.

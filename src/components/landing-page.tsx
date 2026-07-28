@@ -12,7 +12,6 @@ import {
   Fingerprint,
   HandCoins,
   Layers3,
-  Leaf,
   MapPinned,
   Network,
   Radar,
@@ -163,11 +162,42 @@ const workflow = [
 ];
 
 const team = [
-  ["Nama Anggota 1", "Project Manager", "/team/member-1.svg"],
-  ["Nama Anggota 2", "Mobile Developer", "/team/member-2.svg"],
-  ["Nama Anggota 3", "Backend Developer", "/team/member-3.svg"],
-  ["Nama Anggota 4", "UI/UX Designer", "/team/member-4.svg"],
-  ["Nama Anggota 5", "Data/Drone Analyst", "/team/member-5.svg"],
+  {
+    name: "Indah Ibanah, S.P., M.Si",
+    role: "Supervisor",
+    detail: "Dosen Agribisnis",
+    image: "/images/ibanah.webp",
+  },
+  {
+    name: "Faruk Umar",
+    role: "Leader",
+    detail: "Agribisnis '24",
+    image: "/images/faruk.webp",
+  },
+  {
+    name: "Fadiyah Kamila A. S.",
+    role: "Secretary",
+    detail: "Agronomi '24",
+    image: "/images/fadiyah.webp",
+  },
+  {
+    name: "Yesika Indah P.",
+    role: "Finance",
+    detail: "Agribisnis '24",
+    image: "/images/yesika.webp",
+  },
+  {
+    name: "Kiarra Putri M.K.W.",
+    role: "Content Planner",
+    detail: "Teknologi Informasi '24",
+    image: "/images/kiarra.webp",
+  },
+  {
+    name: "Anugrah Farel P.F.",
+    role: "Content Creator",
+    detail: "Teknologi Informasi '23",
+    image: "/images/farel.webp",
+  },
 ];
 
 const smoothEase = [0.22, 1, 0.36, 1] as const;
@@ -237,13 +267,20 @@ function SectionHeader({
 function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/12 bg-[#071811]/60 px-4 py-3 text-white shadow-2xl shadow-black/20 backdrop-blur-xl">
-        <a href="#hero" className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-xl bg-white text-[#0A3B2E]">
-            <Leaf className="size-5" aria-hidden="true" />
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border border-white/12 bg-[#071811]/60 px-3 py-3 text-white shadow-2xl shadow-black/20 backdrop-blur-xl sm:px-4">
+        <a href="#hero" className="flex min-w-0 items-center gap-2 transition hover:-translate-y-0.5 sm:gap-3">
+          <span className="flex shrink-0 items-center rounded-2xl bg-[#F7F5EF] px-3 py-2 shadow-lg shadow-black/15 ring-1 ring-white/40">
+            <Image
+              src="/images/logo.png"
+              alt="DeforTrack"
+              width={180}
+              height={72}
+              priority
+              className="h-9 w-auto object-contain sm:h-10"
+            />
           </span>
-          <span className="text-base font-semibold tracking-tight sm:text-lg">
-            DeforTrack
+          <span className="inline-flex shrink-0 rounded-full border border-[#F4C95D]/30 bg-[#F4C95D]/12 px-2.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#F4C95D] shadow-lg shadow-black/10 backdrop-blur sm:px-3 sm:text-xs sm:tracking-[0.18em]">
+            PKM-VGK
           </span>
         </a>
         <div className="hidden items-center gap-6 text-sm font-medium text-white/68 lg:flex">
@@ -254,7 +291,7 @@ function Header() {
           ))}
         </div>
         <a
-          href="/downloads/defortrack.apk"
+          href="#download"
           className="group inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#F4C95D] px-4 text-sm font-semibold text-[#0A3B2E] shadow-lg shadow-[#F4C95D]/15 transition hover:-translate-y-0.5 hover:bg-white"
         >
           <Download className="size-4 transition group-hover:translate-y-0.5" aria-hidden="true" />
@@ -276,32 +313,28 @@ function HeroStage() {
   const titleOpacity = useTransform(smoothProgress, [0, 1], [1, 1]);
   const titleY = useTransform(smoothProgress, [0, 1], [0, 0]);
   const imageY = useTransform(smoothProgress, [0, 1], [0, 120]);
-  const imageScale = useTransform(smoothProgress, [0, 1], [1.08, 1.18]);
-  const firstStory = useTransform(smoothProgress, [0.22, 0.36, 0.58], [0, 1, 0]);
-  const secondStory = useTransform(smoothProgress, [0.52, 0.66, 0.86], [0, 1, 0]);
-  const thirdStory = useTransform(smoothProgress, [0.76, 0.9, 1], [0, 1, 0.42]);
-
+  const imageScale = useTransform(smoothProgress, [0, 1], [1.03, 1.12]);
   return (
-    <section ref={heroRef} id="hero" className="relative min-h-screen bg-[#071811]">
-      <div className="relative min-h-screen overflow-hidden">
-        <motion.div style={{ y: imageY, scale: imageScale }} className="absolute -inset-8">
+    <section ref={heroRef} id="hero" className="relative min-h-[100svh] bg-[#071811]">
+      <div className="relative min-h-[100svh] overflow-hidden">
+        <motion.div style={{ y: imageY, scale: imageScale }} className="absolute -inset-4 lg:-inset-8">
           <Image
             src="/images/defortrack-hero.png"
             alt="Drone memindai kawasan hutan dan lahan pertanian"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[45%_center]"
+            className="object-cover object-[18%_center] sm:object-[34%_center] lg:object-[45%_center]"
           />
         </motion.div>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(7,24,17,0.16)_0%,rgba(7,24,17,0.34)_36%,rgba(7,24,17,0.76)_66%,rgba(7,24,17,0.94)_100%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,17,0.38)_0%,rgba(7,24,17,0.06)_34%,rgba(7,24,17,0.36)_70%,#071811_100%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_44%,rgba(10,59,46,0.5),transparent_36%),radial-gradient(circle_at_18%_38%,rgba(244,201,93,0.08),transparent_22%)]" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-[62vw] bg-[linear-gradient(270deg,rgba(7,24,17,0.72),rgba(7,24,17,0))]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(7,24,17,0.68)_0%,rgba(7,24,17,0.38)_48%,rgba(7,24,17,0.12)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,24,17,0.16)_0%,rgba(7,24,17,0.34)_36%,rgba(7,24,17,0.76)_66%,rgba(7,24,17,0.94)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,17,0.24)_0%,rgba(7,24,17,0.03)_30%,rgba(7,24,17,0.30)_74%,#071811_100%)] lg:bg-[linear-gradient(180deg,rgba(7,24,17,0.38)_0%,rgba(7,24,17,0.06)_34%,rgba(7,24,17,0.36)_70%,#071811_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_42%,rgba(10,59,46,0.34),transparent_38%),radial-gradient(circle_at_76%_34%,rgba(244,201,93,0.08),transparent_22%)] lg:bg-[radial-gradient(circle_at_72%_44%,rgba(10,59,46,0.5),transparent_36%),radial-gradient(circle_at_18%_38%,rgba(244,201,93,0.08),transparent_22%)]" />
+        <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-[62vw] bg-[linear-gradient(270deg,rgba(7,24,17,0.72),rgba(7,24,17,0))] lg:block" />
 
         <motion.div
           style={{ opacity: titleOpacity, y: titleY }}
-          className="pointer-events-auto relative z-10 flex min-h-screen items-center px-5 pt-28 sm:px-8"
+          className="pointer-events-auto relative z-10 flex min-h-[100svh] items-start px-5 pb-10 pt-28 sm:px-8 lg:items-center lg:pb-0"
         >
           <div className="mx-auto flex w-full max-w-7xl justify-start lg:justify-end">
             <div className="max-w-4xl lg:max-w-3xl lg:text-right">
@@ -332,13 +365,33 @@ function HeroStage() {
                 drone, laporan petani, dan dashboard peran.
               </motion.p>
               <motion.div
+                initial={{ opacity: 0, y: 22, filter: "blur(12px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 0.22, duration: 0.85, ease: smoothEase }}
+                className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#F4C95D]/26 bg-[#F7F5EF]/12 p-2 text-white shadow-2xl shadow-black/30 backdrop-blur-xl lg:hidden"
+              >
+                <div className="relative aspect-video overflow-hidden rounded-[1rem]">
+                  <Image
+                    src="/images/bersama.jpg"
+                    alt="Foto bersama tim DeforTrack"
+                    fill
+                    sizes="calc(100vw - 2.5rem)"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_34%,rgba(7,24,17,0.76)_100%)]" />
+                  <div className="absolute bottom-3 left-3 rounded-xl border border-white/12 bg-[#071811]/58 px-3 py-2 backdrop-blur-xl">
+                    <p className="text-sm font-semibold text-white">Tim DeforTrack</p>
+                  </div>
+                </div>
+              </motion.div>
+              <motion.div
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ delay: 0.24, duration: 0.85, ease: smoothEase }}
                 className="mt-10 flex flex-col gap-3 sm:flex-row lg:justify-end"
               >
                 <a
-                  href="/downloads/defortrack.apk"
+                  href="#download"
                   className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-[#F4C95D] px-7 text-base font-semibold text-[#0A3B2E] shadow-2xl shadow-[#F4C95D]/20 transition hover:-translate-y-1 hover:bg-white"
                 >
                   <Download className="size-5 transition group-hover:translate-y-0.5" aria-hidden="true" />
@@ -356,17 +409,35 @@ function HeroStage() {
           </div>
         </motion.div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-7 z-20 hidden px-6 lg:block">
-          <div className="mx-auto flex max-w-7xl items-end justify-between">
+        <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
+          <div className="absolute bottom-24 left-4 xl:left-10 2xl:left-16">
             <motion.div
               initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.42, duration: 0.7 }}
-              className="rounded-2xl border border-white/14 bg-white/[0.08] p-4 text-white shadow-2xl shadow-black/20 backdrop-blur-xl"
+              transition={{ delay: 0.42, duration: 0.8, ease: smoothEase }}
+              className="relative w-[min(38rem,46vw)] overflow-hidden rounded-[1.75rem] border border-[#F4C95D]/28 bg-[#F7F5EF]/12 p-2.5 text-white shadow-2xl shadow-black/30 backdrop-blur-xl"
             >
-              <p className="text-xs uppercase tracking-[0.22em] text-white/46">Scan fidelity</p>
-              <p className="mt-2 text-3xl font-semibold">98.4%</p>
+              <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_80%,rgba(244,201,93,0.26),transparent_34%)]" />
+              <div className="relative aspect-video overflow-hidden rounded-[1.25rem]">
+                <Image
+                  src="/images/bersama.jpg"
+                  alt="Foto bersama tim DeforTrack"
+                  fill
+                  sizes="38rem"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,17,0.04)_0%,transparent_42%,rgba(7,24,17,0.78)_100%)]" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                  <div className="rounded-2xl border border-white/12 bg-[#071811]/55 px-4 py-3 backdrop-blur-xl">
+                    <p className="text-lg font-semibold text-white">
+                      Tim DeforTrack
+                    </p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
+          </div>
+          <div className="absolute bottom-7 right-6 xl:right-10 2xl:right-16">
             <motion.div
               initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -389,45 +460,12 @@ function HeroStage() {
           </div>
         </div>
 
-        <motion.div
-          style={{ opacity: firstStory }}
-          className="pointer-events-none absolute right-5 top-[24%] z-20 w-[min(25rem,calc(100%-2.5rem))] rounded-3xl border border-white/14 bg-[#071811]/58 p-6 text-white shadow-2xl shadow-black/30 backdrop-blur-2xl sm:right-10"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#F4C95D]">01 Drone appears</p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight">Aerial context enters the system.</h2>
-          <p className="mt-4 leading-7 text-white/64">
-            Drone bergerak di atas kawasan hutan dan lahan untuk membuka lapisan data pertama.
-          </p>
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: secondStory }}
-          className="pointer-events-none absolute left-5 top-[34%] z-20 w-[min(25rem,calc(100%-2.5rem))] rounded-3xl border border-white/14 bg-[#071811]/58 p-6 text-white shadow-2xl shadow-black/30 backdrop-blur-2xl sm:left-10"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#F4C95D]">02 Forest scan</p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight">The terrain becomes measurable.</h2>
-          <p className="mt-4 leading-7 text-white/64">
-            Laser scan bergerak perlahan, lalu area prioritas muncul sebagai heatmap yang bisa dianalisis.
-          </p>
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: thirdStory }}
-          className="pointer-events-none absolute bottom-20 left-1/2 z-20 w-[min(42rem,calc(100%-2.5rem))] -translate-x-1/2 rounded-3xl border border-white/14 bg-[#071811]/62 p-6 text-center text-white shadow-2xl shadow-black/30 backdrop-blur-2xl"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#F4C95D]">03 Data turns actionable</p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight">From scan to role-based decisions.</h2>
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-white/64">
-            Data drone, laporan petani, dan kontrol Admin KPH menyatu menjadi alur kerja pengelolaan lahan.
-          </p>
-        </motion.div>
-
         <motion.a
           href="#fitur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1, duration: 0.8 }}
-          className="absolute bottom-7 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 backdrop-blur-xl transition hover:text-white"
+          className="absolute bottom-7 left-1/2 z-30 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 backdrop-blur-xl transition hover:text-white sm:flex"
         >
           Scroll
           <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
@@ -473,9 +511,9 @@ function FeaturesSection() {
       <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(247,245,239,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(247,245,239,0.14)_1px,transparent_1px)] [background-size:88px_88px]" />
       <div className="relative mx-auto max-w-7xl">
         <SectionHeader
-          eyebrow="Feature architecture"
-          title="Glass modules that turn raw terrain into decisions."
-          description="Setiap fitur dibuat seperti instrument panel: ringan, tajam, dan bergerak mengikuti konteks monitoring."
+          eyebrow="Fitur utama"
+          title="Semua data lahan, laporan, dan scan drone dalam satu alur."
+          description="DeforTrack membantu tiap peran melihat informasi yang dibutuhkan: kondisi lahan, hasil pemindaian, laporan lapangan, data wilayah, dan bantuan pertanian."
         />
         <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {features.map((feature, index) => (
@@ -516,27 +554,14 @@ function RoleNetworkSection() {
         <SectionHeader
           eyebrow="Role network"
           title="Four users connected by one operational signal."
-          description="Petani, Operator Drone, Admin KPH, dan Super Admin berada dalam jaringan peran yang saling memberi konteks."
+          description="Setiap pengguna memiliki akses sesuai tugasnya, mulai dari laporan petani, pemindaian drone, pengelolaan wilayah KPH, hingga pengawasan seluruh sistem."
         />
         <Reveal className="mt-16">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl md:hidden">
-            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 360 720" preserveAspectRatio="none" aria-hidden="true">
-              <motion.path
-                d="M180 104 C170 205 206 270 180 360 C154 450 190 530 180 640"
-                fill="none"
-                stroke="rgba(244,201,93,0.58)"
-                strokeWidth="2"
-                strokeDasharray="8 13"
-                initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.45 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-              />
-            </svg>
             <div className="relative z-10 mx-auto flex w-48 flex-col items-center rounded-[1.5rem] border border-[#F4C95D]/30 bg-[#F4C95D]/12 p-5 text-center text-white shadow-2xl shadow-[#F4C95D]/10 backdrop-blur-xl">
               <Layers3 className="size-7 text-[#F4C95D]" aria-hidden="true" />
               <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/54">Core data</p>
-              <p className="mt-1 text-2xl font-semibold">DeForTrack</p>
+              <p className="mt-1 text-2xl font-semibold">DeforTrack</p>
             </div>
             <div className="relative z-10 mt-10 space-y-4">
               {roles.map((role, index) => (
@@ -666,36 +691,51 @@ function WorkflowSection() {
 }
 
 function TeamSection() {
+  const teamRows = [team.slice(0, 1), team.slice(1, 3), team.slice(3, 6)];
+
   return (
     <section id="tim" className="bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           eyebrow="Team signal"
-          title="The people behind the terrain intelligence."
-          description="Placeholder anggota tim sudah disiapkan agar kamu bisa mengganti foto dan biodata dengan mudah."
+          title="Tim Hebat di balik DeforTrack."
+          description="Struktur tim DeforTrack."
         />
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {team.map(([name, role, image], index) => (
-            <Reveal key={name}>
-              <motion.article
-                whileHover={{ y: -9, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="rounded-[1.5rem] border border-white/12 bg-white/[0.06] p-4 text-white shadow-2xl shadow-black/12 backdrop-blur-xl"
-              >
-                <Image
-                  src={image}
-                  alt={`Foto placeholder ${name}`}
-                  width={320}
-                  height={320}
-                  className="aspect-square w-full rounded-[1.1rem] object-cover"
-                />
-                <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
-                  0{index + 1}
-                </p>
-                <h3 className="mt-2 text-xl font-semibold">{name}</h3>
-                <p className="mt-1 text-sm text-white/58">{role}</p>
-              </motion.article>
-            </Reveal>
+        <div className="mt-16 space-y-5">
+          {teamRows.map((row, rowIndex) => (
+            <div
+              key={`team-row-${rowIndex}`}
+              className="grid gap-5 sm:grid-cols-2 lg:flex lg:justify-center"
+            >
+              {row.map((member) => {
+                return (
+                  <Reveal key={member.name} className="lg:w-[min(100%,20rem)]">
+                    <motion.article
+                      whileHover={{ y: -9, scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                      className={`rounded-[1.5rem] border border-white/12 bg-white/[0.06] p-4 text-white shadow-2xl shadow-black/12 backdrop-blur-xl ${
+                        rowIndex === 0 ? "mx-auto max-w-sm border-[#F4C95D]/28 bg-[#F4C95D]/8" : ""
+                      }`}
+                    >
+                      <Image
+                        src={member.image}
+                        alt={`Foto placeholder ${member.name}`}
+                        width={320}
+                        height={320}
+                        className="aspect-square w-full rounded-[1.1rem] object-cover"
+                      />
+                      <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
+                        {member.role}
+                      </p>
+                      <h3 className="mt-2 text-xl font-semibold leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className="mt-2 text-sm text-white/58">{member.detail}</p>
+                    </motion.article>
+                  </Reveal>
+                );
+              })}
+            </div>
           ))}
         </div>
       </div>
@@ -717,14 +757,15 @@ function DownloadSection() {
           <div className="p-7 text-white sm:p-10 lg:p-14">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#F4C95D]/28 bg-[#F4C95D]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
               <Download className="size-4" aria-hidden="true" />
-              Android package
+              Demo Android
             </div>
             <h2 className="mt-8 max-w-3xl text-4xl font-semibold leading-[1] tracking-tight sm:text-6xl">
-              Download Aplikasi DeforTrack
+              Download Demo Aplikasi DeforTrack
             </h2>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/64">
-              Unduh APK DeforTrack untuk monitoring lahan, laporan petani,
-              hasil scan drone, dan akses role dari perangkat Android.
+              APK ini adalah versi demo untuk memperlihatkan alur monitoring
+              lahan, laporan petani, hasil scan drone, dan akses role dari
+              perangkat Android. Data dan beberapa fitur masih bersifat contoh.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
@@ -739,33 +780,21 @@ function DownloadSection() {
               </p>
             </div>
           </div>
-          <div className="relative min-h-[440px] overflow-hidden border-t border-white/10 bg-[#F7F5EF]/8 lg:border-l lg:border-t-0">
+          <div className="relative min-h-[300px] overflow-hidden border-t border-white/10 bg-[#F7F5EF]/8 sm:min-h-[440px] lg:border-l lg:border-t-0">
             <motion.div
-              animate={{ y: [0, -16, 0], rotate: [-2, 2, -2] }}
+              animate={{ y: [0, -8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-1/2 top-1/2 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[2.5rem] border border-white/18 bg-[#071811] p-3 shadow-2xl shadow-black/40"
+              className="absolute left-1/2 top-1/2 aspect-[780/1600] w-[min(9rem,39vw)] -translate-x-1/2 -translate-y-1/2 rounded-[1.55rem] border border-white/18 bg-[#071811] p-1.5 shadow-2xl shadow-black/40 sm:w-[min(15.5rem,66vw)] sm:rounded-[2.5rem] sm:p-2.5"
             >
-              <div className="rounded-[2rem] border border-white/12 bg-[linear-gradient(180deg,#123c28,#071811)] p-5">
-                <div className="mx-auto h-1.5 w-16 rounded-full bg-white/20" />
-                <div className="mt-8 rounded-2xl border border-white/12 bg-white/[0.08] p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#F4C95D]">Scan ready</p>
-                  <p className="mt-3 text-3xl font-semibold text-white">APK</p>
-                  <div className="mt-5 space-y-2">
-                    <div className="h-2 rounded-full bg-white/16" />
-                    <div className="h-2 w-8/12 rounded-full bg-[#1F8A70]" />
-                    <div className="h-2 w-10/12 rounded-full bg-white/12" />
-                  </div>
-                </div>
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-white/[0.08] p-4">
-                    <Leaf className="size-5 text-[#1F8A70]" aria-hidden="true" />
-                    <p className="mt-4 text-xs text-white/58">Lahan</p>
-                  </div>
-                  <div className="rounded-2xl bg-white/[0.08] p-4">
-                    <Drone className="size-5 text-[#F4C95D]" aria-hidden="true" />
-                    <p className="mt-4 text-xs text-white/58">Drone</p>
-                  </div>
-                </div>
+              <div className="relative h-full overflow-hidden rounded-[1.25rem] border border-white/12 bg-[#071811] sm:rounded-[2rem]">
+                <Image
+                  src="/images/aplikasi.jpg"
+                  alt="Tampilan aplikasi DeforTrack"
+                  fill
+                  sizes="(min-width: 640px) 15.5rem, 39vw"
+                  className="object-cover"
+                />
+                <div className="absolute left-1/2 top-2 h-1 w-10 -translate-x-1/2 rounded-full bg-black/35 ring-1 ring-white/10 sm:top-3 sm:h-1.5 sm:w-16" />
               </div>
             </motion.div>
           </div>
@@ -780,11 +809,14 @@ function Footer() {
     <footer className="border-t border-white/10 bg-[#071811] px-5 py-10 text-white sm:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="flex items-center gap-3">
-            <span className="flex size-10 items-center justify-center rounded-xl bg-white text-[#0A3B2E]">
-              <Leaf className="size-5" aria-hidden="true" />
-            </span>
-            <p className="text-lg font-semibold">DeforTrack</p>
+          <div className="inline-flex items-center rounded-2xl bg-[#F7F5EF] px-4 py-3 shadow-xl shadow-black/20 ring-1 ring-white/30">
+            <Image
+              src="/images/logo.png"
+              alt="DeforTrack"
+              width={220}
+              height={88}
+              className="h-[3.25rem] w-auto object-contain sm:h-14"
+            />
           </div>
           <p className="mt-4 max-w-xl text-sm leading-6 text-white/46">
             Public information site for drone-assisted forest monitoring,
