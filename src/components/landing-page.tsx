@@ -40,6 +40,83 @@ const navItems = [
   { label: "Download", href: "#download" },
 ];
 
+function InstagramLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="instagramGradient" x1="4" x2="20" y1="20" y2="4">
+          <stop offset="0" stopColor="#FEDA75" />
+          <stop offset="0.28" stopColor="#FA7E1E" />
+          <stop offset="0.55" stopColor="#D62976" />
+          <stop offset="0.78" stopColor="#962FBF" />
+          <stop offset="1" stopColor="#4F5BD5" />
+        </linearGradient>
+      </defs>
+      <rect width="20" height="20" x="2" y="2" rx="5.4" fill="url(#instagramGradient)" />
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="white" strokeWidth="2" />
+      <circle cx="17.1" cy="6.9" r="1.35" fill="white" />
+    </svg>
+  );
+}
+
+function TikTokLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        d="M14.8 2.5h3.1c.2 1.3.8 2.4 1.7 3.3.8.8 1.8 1.3 3 1.5v3.2a8 8 0 0 1-4.6-1.4v6.2c0 3.7-2.5 6.2-6.1 6.2-3.4 0-5.9-2.3-5.9-5.5 0-3.5 2.7-5.8 6.4-5.4v3.2c-1.8-.3-3.1.5-3.1 2 0 1.3 1 2.2 2.5 2.2 1.7 0 2.9-1 2.9-3.2V2.5Z"
+        fill="#111111"
+      />
+      <path
+        d="M16.5 2.5h1.4c.2 1.3.8 2.4 1.7 3.3.8.8 1.8 1.3 3 1.5v1.4c-2.9-.3-5.2-2.5-6.1-6.2Z"
+        fill="#25F4EE"
+      />
+      <path
+        d="M12.4 10.6v3.2c-1.8-.3-3.1.5-3.1 2 0 .9.5 1.6 1.3 2-2.2-.1-3.7-1.9-3.7-4 .8-2.3 2.9-3.5 5.5-3.2Z"
+        fill="#FE2C55"
+      />
+    </svg>
+  );
+}
+
+function YouTubeLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <rect width="22" height="16" x="1" y="4" rx="4.2" fill="#FF0000" />
+      <path d="m10 8.5 6 3.5-6 3.5v-7Z" fill="white" />
+    </svg>
+  );
+}
+
+function GmailLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path d="M4.5 6.5h15v11h-15v-11Z" fill="#FFFFFF" />
+      <path d="M4.5 6.5 12 12l7.5-5.5v2.9L12 14.8 4.5 9.4V6.5Z" fill="#EA4335" />
+      <path d="M4.5 6.5v11h3v-8.8l-3-2.2Z" fill="#C5221F" />
+      <path d="M19.5 6.5v11h-3v-8.8l3-2.2Z" fill="#FABB05" />
+      <path d="M7.5 17.5h9v-2.8l-4.5 3.1-4.5-3.1v2.8Z" fill="#34A853" />
+    </svg>
+  );
+}
+
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/defortrack",
+    icon: InstagramLogo,
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@defortrack",
+    icon: TikTokLogo,
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@defortrack",
+    icon: YouTubeLogo,
+  },
+];
+
 const features = [
   {
     title: "Drone Scan Intelligence",
@@ -808,6 +885,48 @@ function DownloadSection() {
 function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#071811] px-5 py-10 text-white sm:px-8">
+      <div className="mx-auto mb-10 max-w-7xl">
+        <div className="flex flex-col gap-4 rounded-[1.6rem] border border-white/12 bg-[#F7F5EF]/[0.035] p-4 shadow-2xl shadow-black/20 backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">
+          <a
+            href="https://www.instagram.com/defortrack"
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#F7F5EF]/8 px-5 py-4 transition hover:-translate-y-0.5 hover:border-[#F4C95D]/40 hover:bg-[#F4C95D]/10 sm:self-start lg:self-auto"
+          >
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#F4C95D]">
+              Sosial Media
+            </span>
+            <span className="text-base font-semibold text-white transition group-hover:text-[#F4C95D]">
+              @defortrack
+            </span>
+          </a>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-end">
+            {socialLinks.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={item.label}
+                className="group flex h-12 items-center gap-2 rounded-2xl border border-white/10 bg-[#F7F5EF]/8 px-4 text-sm font-semibold text-white/78 transition hover:-translate-y-0.5 hover:border-[#F4C95D]/40 hover:bg-[#F4C95D]/10 hover:text-white"
+              >
+                <item.icon className="size-6 transition group-hover:scale-110" />
+                <span>{item.label}</span>
+              </a>
+            ))}
+            <a
+              href="mailto:defortrackpkmvgk@gmail.com"
+              className="group flex h-12 min-w-0 max-w-full items-center gap-2 rounded-2xl border border-white/10 bg-[#F7F5EF]/8 px-4 text-sm font-semibold text-white/78 transition hover:-translate-y-0.5 hover:border-[#F4C95D]/40 hover:bg-[#F4C95D]/10 hover:text-white"
+            >
+              <GmailLogo className="size-6 shrink-0 transition group-hover:scale-110" />
+              <span className="sm:hidden">Contact Us</span>
+              <span className="hidden truncate sm:inline">defortrackpkmvgk@gmail.com</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="inline-flex items-center rounded-2xl bg-[#F7F5EF] px-4 py-3 shadow-xl shadow-black/20 ring-1 ring-white/30">
