@@ -128,9 +128,9 @@ const features = [
   {
     title: "Laporan Lapangan",
     description:
-      "Petani mengirim kondisi lahan, bukti lokasi, dan kebutuhan bantuan langsung ke alur monitoring wilayah.",
+      "Petani dan masyarakat dapat mengirim kondisi lahan, bukti lokasi, dan laporan wilayah ke alur monitoring.",
     icon: ClipboardList,
-    metric: "Farmer signal",
+    metric: "Field reports",
   },
   {
     title: "Wilayah dan Data Lahan",
@@ -156,7 +156,7 @@ const features = [
   {
     title: "Dashboard Per Role",
     description:
-      "Setiap role masuk ke ruang kerja yang berbeda, dari petani sampai Super Admin pengawas sistem.",
+      "Setiap role masuk ke ruang kerja yang berbeda, dari masyarakat dan petani sampai Super Admin pengawas sistem.",
     icon: BarChart3,
     metric: "Role-aware UI",
   },
@@ -167,6 +167,11 @@ const roles = [
     title: "Petani",
     description: "Laporan lahan, riwayat scan, dan informasi insentif.",
     icon: Sprout,
+  },
+  {
+    title: "Masyarakat",
+    description: "Registrasi mandiri, laporan wilayah, data lahan region, dan detail petani.",
+    icon: UsersRound,
   },
   {
     title: "Operator Drone",
@@ -181,40 +186,157 @@ const roles = [
   {
     title: "Super Admin",
     description: "Pengawasan seluruh user, wilayah, scan, drone, dan bantuan.",
-    icon: UsersRound,
+    icon: Network,
   },
 ];
 
 const desktopRoleNodes = [
   {
     ...roles[0],
-    position: "left-[8%] top-[18%]",
+    position: "left-[8%] top-[24%]",
   },
   {
-    ...roles[1],
-    position: "left-[8%] bottom-[18%]",
+    ...roles[4],
+    position: "left-[calc(50%-9rem)] top-[7%]",
   },
   {
     ...roles[2],
-    position: "right-[8%] top-[18%]",
+    position: "left-[8%] bottom-[10%]",
   },
   {
     ...roles[3],
-    position: "right-[8%] bottom-[18%]",
+    position: "right-[8%] top-[24%]",
+  },
+  {
+    ...roles[1],
+    position: "right-[8%] bottom-[10%]",
   },
 ];
 
-const desktopRolePaths = [
-  "M330 178 C380 178 404 228 442 267",
-  "M330 442 C380 442 404 392 442 353",
-  "M670 178 C620 178 596 228 558 267",
-  "M670 442 C620 442 596 392 558 353",
-];
+type NetworkPoint = {
+  x: number;
+  y: number;
+};
+
+type NetworkRect = NetworkPoint & {
+  width: number;
+  height: number;
+};
+
+type RoleConnectorPath = {
+  d: string;
+  roleTitle: string;
+};
+
+const cardConnectorOverlap = 10;
+
+function formatPathNumber(value: number) {
+  return Number(value.toFixed(2));
+}
+
+function normalizeVector(vector: NetworkPoint) {
+  const length = Math.hypot(vector.x, vector.y);
+
+  if (length === 0) {
+    return { x: 0, y: 0 };
+  }
+
+  return {
+    x: vector.x / length,
+    y: vector.y / length,
+  };
+}
+
+function getRectEdgePoint(rect: NetworkRect, target: NetworkPoint) {
+  const center = {
+    x: rect.x + rect.width / 2,
+    y: rect.y + rect.height / 2,
+  };
+  const deltaX = target.x - center.x;
+  const deltaY = target.y - center.y;
+
+  if (deltaX === 0 && deltaY === 0) {
+    return center;
+  }
+
+  const scaleX =
+    deltaX === 0 ? Number.POSITIVE_INFINITY : rect.width / 2 / Math.abs(deltaX);
+  const scaleY =
+    deltaY === 0 ? Number.POSITIVE_INFINITY : rect.height / 2 / Math.abs(deltaY);
+  const scale = Math.min(scaleX, scaleY);
+
+  return {
+    x: center.x + deltaX * scale,
+    y: center.y + deltaY * scale,
+  };
+}
+
+function getEllipseEdgePoint(
+  center: NetworkPoint,
+  target: NetworkPoint,
+  radius: NetworkPoint,
+) {
+  const deltaX = target.x - center.x;
+  const deltaY = target.y - center.y;
+  const radiusX = Math.max(radius.x, 1);
+  const radiusY = Math.max(radius.y, 1);
+
+  if (deltaX === 0 && deltaY === 0) {
+    return center;
+  }
+
+  const scale =
+    1 /
+    Math.sqrt((deltaX * deltaX) / (radiusX * radiusX) + (deltaY * deltaY) / (radiusY * radiusY));
+
+  return {
+    x: center.x + deltaX * scale,
+    y: center.y + deltaY * scale,
+  };
+}
+
+function createRoleConnectorPath(
+  cardRect: NetworkRect,
+  coreCenter: NetworkPoint,
+  coreRadius: NetworkPoint,
+) {
+  const cardCenter = {
+    x: cardRect.x + cardRect.width / 2,
+    y: cardRect.y + cardRect.height / 2,
+  };
+  const cardToCore = normalizeVector({
+    x: coreCenter.x - cardCenter.x,
+    y: coreCenter.y - cardCenter.y,
+  });
+  const cardEdge = getRectEdgePoint(cardRect, coreCenter);
+  const coreEdge = getEllipseEdgePoint(coreCenter, cardCenter, coreRadius);
+  const cardAnchor = {
+    x: cardEdge.x - cardToCore.x * cardConnectorOverlap,
+    y: cardEdge.y - cardToCore.y * cardConnectorOverlap,
+  };
+  const coreAnchor = coreEdge;
+  const deltaX = coreAnchor.x - cardAnchor.x;
+  const deltaY = coreAnchor.y - cardAnchor.y;
+  const horizontalPath = Math.abs(deltaX) > Math.abs(deltaY);
+  const controlA = horizontalPath
+    ? { x: cardAnchor.x + deltaX * 0.45, y: cardAnchor.y }
+    : { x: cardAnchor.x, y: cardAnchor.y + deltaY * 0.45 };
+  const controlB = horizontalPath
+    ? { x: coreAnchor.x - deltaX * 0.45, y: coreAnchor.y }
+    : { x: coreAnchor.x, y: coreAnchor.y - deltaY * 0.45 };
+
+  return [
+    `M${formatPathNumber(cardAnchor.x)} ${formatPathNumber(cardAnchor.y)}`,
+    `C${formatPathNumber(controlA.x)} ${formatPathNumber(controlA.y)}`,
+    `${formatPathNumber(controlB.x)} ${formatPathNumber(controlB.y)}`,
+    `${formatPathNumber(coreAnchor.x)} ${formatPathNumber(coreAnchor.y)}`,
+  ].join(" ");
+}
 
 const workflow = [
   {
     title: "Register",
-    description: "Petani dan lahan masuk ke wilayah pengelolaan.",
+    description: "Masyarakat dapat registrasi mandiri, sementara petani dan lahan masuk ke wilayah pengelolaan.",
     icon: Fingerprint,
   },
   {
@@ -238,6 +360,11 @@ const workflow = [
     icon: Network,
   },
 ];
+
+const workflowConnectorIndexes = Array.from(
+  { length: workflow.length - 1 },
+  (_, index) => index,
+);
 
 const team = [
   {
@@ -561,17 +688,18 @@ function AboutSection() {
           align="left"
           eyebrow="System concept"
           title="A living data layer for forest and land operations."
-          description="DeforTrack dibuat untuk membantu pemantauan wilayah hutan/lahan secara lebih terstruktur. Sistem ini menghubungkan petani, operator drone, Admin KPH, dan Super Admin dalam satu alur data."
+          description="DeforTrack dibuat untuk membantu pemantauan wilayah hutan/lahan secara lebih terstruktur. Sistem ini menghubungkan masyarakat, petani, operator drone, Admin KPH, dan Super Admin dalam satu alur data."
         />
         <Reveal className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-6 text-white shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8">
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
               ["Drone", "Scan wilayah dan riwayat pemindaian"],
+              ["Masyarakat", "Laporan wilayah dan akses data region"],
               ["Petani", "Laporan lapangan dan data lahan"],
               ["KPH", "Monitoring wilayah dan insentif"],
             ].map(([title, description]) => (
-              <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
-                <p className="text-2xl font-semibold text-[#F4C95D]">{title}</p>
+              <div key={title} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                <p className="break-words text-xl font-semibold text-white sm:text-2xl">{title}</p>
                 <p className="mt-3 text-sm leading-6 text-white/58">{description}</p>
               </div>
             ))}
@@ -626,13 +754,87 @@ function FeaturesSection() {
 }
 
 function RoleNetworkSection() {
+  const networkRef = useRef<HTMLDivElement>(null);
+  const coreRef = useRef<HTMLDivElement>(null);
+  const roleCardRefs = useRef<(HTMLElement | null)[]>([]);
+  const [roleCanvasSize, setRoleCanvasSize] = useState({ width: 1000, height: 620 });
+  const [roleConnectorPaths, setRoleConnectorPaths] = useState<RoleConnectorPath[]>([]);
+
+  useEffect(() => {
+    const network = networkRef.current;
+    const core = coreRef.current;
+
+    if (!network || !core) {
+      return;
+    }
+
+    let frameId = 0;
+
+    const updateConnectorPaths = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(() => {
+        const width = network.clientWidth;
+        const height = network.clientHeight;
+        const cards = roleCardRefs.current.slice(0, desktopRoleNodes.length);
+
+        if (width === 0 || height === 0 || cards.some((card) => !card)) {
+          return;
+        }
+
+        const coreCenter = {
+          x: width / 2,
+          y: height / 2,
+        };
+        const coreRadius = {
+          x: core.offsetWidth / 2,
+          y: core.offsetHeight / 2,
+        };
+        const nextPaths = cards.map((card, index) => {
+          const node = card as HTMLElement;
+          const cardRect = {
+            x: node.offsetLeft,
+            y: node.offsetTop,
+            width: node.offsetWidth,
+            height: node.offsetHeight,
+          };
+
+          return {
+            d: createRoleConnectorPath(cardRect, coreCenter, coreRadius),
+            roleTitle: desktopRoleNodes[index].title,
+          };
+        });
+
+        setRoleCanvasSize({ width, height });
+        setRoleConnectorPaths(nextPaths);
+      });
+    };
+
+    updateConnectorPaths();
+
+    const observer = new ResizeObserver(updateConnectorPaths);
+    observer.observe(network);
+    observer.observe(core);
+    roleCardRefs.current.forEach((node) => {
+      if (node) {
+        observer.observe(node);
+      }
+    });
+    window.addEventListener("resize", updateConnectorPaths);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      observer.disconnect();
+      window.removeEventListener("resize", updateConnectorPaths);
+    };
+  }, []);
+
   return (
     <section id="role" className="relative overflow-hidden bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           eyebrow="Role network"
-          title="Four users connected by one operational signal."
-          description="Setiap pengguna memiliki akses sesuai tugasnya, mulai dari laporan petani, pemindaian drone, pengelolaan wilayah KPH, hingga pengawasan seluruh sistem."
+          title="Lima role terhubung dalam satu alur monitoring."
+          description="Setiap pengguna memiliki akses sesuai tugasnya, mulai dari laporan masyarakat dan petani, pemindaian drone, pengelolaan wilayah KPH, hingga pengawasan seluruh sistem."
         />
         <Reveal className="mt-16">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl md:hidden">
@@ -649,7 +851,7 @@ function RoleNetworkSection() {
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, amount: 0.35 }}
                   transition={{ delay: index * 0.08, duration: 0.58, ease: smoothEase }}
-                  className="rounded-[1.35rem] border border-white/12 bg-[#F7F5EF]/10 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl"
+                  className="rounded-[1.35rem] border border-white/12 bg-[#2f4038]/95 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl"
                 >
                   <div className="flex items-center gap-3">
                     <span className="flex size-11 items-center justify-center rounded-2xl bg-[#1F8A70] text-white">
@@ -663,16 +865,25 @@ function RoleNetworkSection() {
             </div>
           </div>
 
-          <div className="relative mx-auto hidden min-h-[620px] max-w-6xl overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 md:block">
-            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
-              {desktopRolePaths.map((path, index) => (
+          <div
+            ref={networkRef}
+            className="relative mx-auto hidden min-h-[620px] max-w-6xl overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 md:block"
+          >
+            <svg
+              className="pointer-events-none absolute inset-0 h-full w-full"
+              viewBox={`0 0 ${roleCanvasSize.width} ${roleCanvasSize.height}`}
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              {roleConnectorPaths.map((path, index) => (
                 <motion.path
-                  key={path}
-                  d={path}
+                  key={path.roleTitle}
+                  d={path.d}
                   fill="none"
                   stroke="rgba(244,201,93,0.62)"
                   strokeWidth="2"
                   strokeDasharray="10 14"
+                  strokeLinecap="round"
                   initial={{ pathLength: 0, opacity: 0 }}
                   whileInView={{ pathLength: 1, opacity: 1 }}
                   viewport={{ once: true, amount: 0.55 }}
@@ -680,20 +891,23 @@ function RoleNetworkSection() {
                 />
               ))}
             </svg>
-            <div className="absolute left-1/2 top-1/2 z-10 flex size-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#F4C95D]/30 bg-[#F4C95D]/12 p-6 text-center text-white shadow-2xl shadow-[#F4C95D]/10 backdrop-blur-xl">
+            <div ref={coreRef} className="absolute left-1/2 top-1/2 z-20 flex size-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#F4C95D]/30 bg-[#F4C95D]/12 p-6 text-center text-white shadow-2xl shadow-[#F4C95D]/10 backdrop-blur-xl">
               <Layers3 className="size-8 text-[#F4C95D]" aria-hidden="true" />
               <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/54">Role Data</p>
               <p className="mt-1 text-2xl font-semibold">DeforTrack</p>
             </div>
             {desktopRoleNodes.map((role, index) => (
               <motion.article
+                ref={(node) => {
+                  roleCardRefs.current[index] = node;
+                }}
                 key={role.title}
                 initial={{ opacity: 0, scale: 0.82, filter: "blur(14px)" }}
                 whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, amount: 0.45 }}
                 whileHover={{ y: -8, scale: 1.03 }}
                 transition={{ delay: index * 0.05, type: "spring", stiffness: 220, damping: 22 }}
-                className={`absolute z-20 w-[18rem] rounded-[1.5rem] border border-white/12 bg-[#F7F5EF]/10 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl ${role.position}`}
+                className={`absolute z-30 w-[18rem] rounded-[1.5rem] border border-white/12 bg-[#2f4038]/95 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl ${role.position}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="flex size-11 items-center justify-center rounded-2xl bg-[#1F8A70] text-white">
@@ -721,24 +935,35 @@ function WorkflowSection() {
             A horizontal flight path from registration to governance.
           </h2>
         </Reveal>
-        <div className="mt-16 overflow-x-auto pb-6">
+        <div className="mt-16 overflow-x-auto pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="relative grid min-w-[960px] grid-cols-5 gap-5">
-            <motion.div
-              className="absolute left-[7%] right-[7%] top-12 h-px bg-[#0A3B2E]/12"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
-              style={{ transformOrigin: "left" }}
-            />
-            <motion.div
-              className="absolute left-[7%] right-[7%] top-12 h-px bg-[linear-gradient(90deg,#1F8A70,#F4C95D)]"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: 0.35, duration: 1.6, ease: "easeInOut" }}
-              style={{ transformOrigin: "left" }}
-            />
+            {workflowConnectorIndexes.map((index) => (
+              <div
+                key={`workflow-connector-${index}`}
+                className="absolute top-12 h-px"
+                style={{
+                  left: `calc(((100% - 5rem) / 5) * ${index + 1} + 1.25rem * ${index})`,
+                  width: "1.25rem",
+                }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-[#0A3B2E]/12"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  style={{ transformOrigin: "left" }}
+                />
+                <motion.div
+                  className="absolute inset-0 bg-[linear-gradient(90deg,#1F8A70,#F4C95D)]"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ delay: 0.35, duration: 1.6, ease: "easeInOut" }}
+                  style={{ transformOrigin: "left" }}
+                />
+              </div>
+            ))}
             {workflow.map((step, index) => (
               <motion.article
                 key={step.title}
@@ -847,7 +1072,7 @@ function DownloadSection() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
-                href="/downloads/defortrack.apk"
+                href="/downloads/defortrack.apk?v=20260817231915"
                 className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-[#F4C95D] px-7 font-semibold text-[#0A3B2E] shadow-2xl shadow-[#F4C95D]/20 transition hover:-translate-y-1 hover:bg-white"
               >
                 <Download className="size-5 transition group-hover:translate-y-0.5" aria-hidden="true" />
@@ -866,10 +1091,11 @@ function DownloadSection() {
             >
               <div className="relative h-full overflow-hidden rounded-[1.25rem] border border-white/12 bg-[#071811] sm:rounded-[2rem]">
                 <Image
-                  src="/images/aplikasi.jpg"
+                  src="/images/aplikasi.jpg?v=2"
                   alt="Tampilan aplikasi DeforTrack"
                   fill
                   sizes="(min-width: 640px) 15.5rem, 39vw"
+                  unoptimized
                   className="object-cover"
                 />
                 <div className="absolute left-1/2 top-2 h-1 w-10 -translate-x-1/2 rounded-full bg-black/35 ring-1 ring-white/10 sm:top-3 sm:h-1.5 sm:w-16" />
