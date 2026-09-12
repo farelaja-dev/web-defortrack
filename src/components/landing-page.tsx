@@ -37,6 +37,7 @@ const navItems = [
   { label: "Role", href: "#role" },
   { label: "Alur", href: "#alur" },
   { label: "Tim", href: "#tim" },
+  { label: "Survei", href: "/survei" },
   { label: "Download", href: "#download" },
 ];
 
@@ -595,6 +596,13 @@ function HeroStage() {
                 transition={{ delay: 0.24, duration: 0.85, ease: smoothEase }}
                 className="mt-10 flex flex-col gap-3 sm:flex-row lg:justify-end"
               >
+                <a
+                  href="/survei"
+                  className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-[#F4C95D]/42 bg-[#F4C95D]/12 px-7 text-base font-semibold text-[#F4C95D] shadow-2xl shadow-black/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-[#F4C95D] hover:text-[#0A3B2E]"
+                >
+                  <ClipboardList className="size-5 transition group-hover:-rotate-6" aria-hidden="true" />
+                  Ikut Survei
+                </a>
                 <a
                   href="#download"
                   className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-[#F4C95D] px-7 text-base font-semibold text-[#0A3B2E] shadow-2xl shadow-[#F4C95D]/20 transition hover:-translate-y-1 hover:bg-white"
