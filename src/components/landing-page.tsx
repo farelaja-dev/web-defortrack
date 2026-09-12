@@ -680,6 +680,66 @@ function HeroStage() {
   );
 }
 
+function VideoSection() {
+  return (
+    <section className="relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <Reveal className="max-w-xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#F4C95D]/28 bg-[#F4C95D]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
+              <YouTubeLogo className="size-4" aria-hidden="true" />
+              Story video
+            </div>
+            <h2 className="mt-6 text-4xl font-semibold leading-[1.04] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Lihat DeforTrack dalam aksi.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-white/64 sm:text-lg">
+              Video ini menampilkan bagaimana sistem monitoring deforestasi, laporan petani,
+              dan pemindaian drone terhubung dalam satu ekosistem yang lebih modern dan terukur.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {[
+                "Drone monitoring",
+                "Role-based system",
+                "Field reporting",
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-xs font-medium uppercase tracking-[0.12em] text-white/70"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal className="relative">
+            <motion.div
+              whileHover={{ y: -8, scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 180, damping: 22 }}
+              className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#0F1E18] p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-4"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(244,201,93,0.18),transparent_32%),radial-gradient(circle_at_70%_80%,rgba(31,138,112,0.28),transparent_30%)]" />
+              <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
+                <div className="aspect-video w-full">
+                  <iframe
+                    className="h-full w-full"
+                    src="https://www.youtube.com/embed/6tC7vioROco?si=TUxRpp03AWneP29u&autoplay=1&mute=1&loop=1&playlist=6tC7vioROco&rel=0&controls=1&modestbranding=1"
+                    title="DeforTrack Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AboutSection() {
   return (
     <section className="relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
@@ -1266,6 +1326,7 @@ export default function LandingPage() {
       <InitialLoader />
       <Header />
       <HeroStage />
+      <VideoSection />
       <AboutSection />
       <FeaturesSection />
       <RoleNetworkSection />
