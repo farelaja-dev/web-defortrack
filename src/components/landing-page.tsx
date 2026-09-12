@@ -1244,9 +1244,20 @@ function Footer() {
             </a>
           ))}
         </div>
-        <p className="text-sm text-white/36">
-          Copyright {new Date().getFullYear()} DeforTrack.
-        </p>
+        <div className="text-left md:text-right">
+          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#F4C95D]/90">
+            Developed by
+          </p>
+          <p className="mt-2 text-sm text-white/80">
+            Anugrah Farel Putra Firdyantara
+          </p>
+          <p className="mt-2 text-sm text-white/80">
+            Kiarra Putri Mulya Kusuma Wardani
+          </p>
+        </div>
+      </div>
+      <div className="mx-auto mt-6 max-w-7xl border-t border-white/10 pt-5 text-center text-sm text-white/36">
+        Copyright {new Date().getFullYear()} DeforTrack.
       </div>
     </footer>
   );
