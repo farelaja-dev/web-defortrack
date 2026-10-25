@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { advantages, deliverableGroups, type Deliverable } from "@/data/landing-content";
 import {
   ArrowDown,
   ArrowRight,
@@ -34,8 +35,10 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 
 const navItems = [
   { label: "Fitur", href: "#fitur" },
+  { label: "Keunggulan", href: "#keunggulan" },
   { label: "Role", href: "#role" },
   { label: "Alur", href: "#alur" },
+  { label: "Luaran", href: "#luaran" },
   { label: "Tim", href: "#tim" },
   { label: "Survei", href: "/survei" },
   { label: "Download", href: "#download" },
@@ -489,7 +492,7 @@ function Header() {
             PKM-VGK
           </span>
         </a>
-        <div className="hidden items-center gap-6 text-sm font-medium text-white/68 lg:flex">
+        <div className="hidden items-center gap-4 text-sm font-medium text-white/68 lg:flex xl:gap-6">
           {navItems.map((item) => (
             <a key={item.href} href={item.href} className="transition hover:text-white">
               {item.label}
@@ -754,6 +757,162 @@ function FeaturesSection() {
                 <div className="absolute bottom-0 left-6 right-6 h-px origin-left scale-x-0 bg-[#F4C95D] transition duration-500 group-hover:scale-x-100" />
               </motion.article>
             </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AdvantagesSection() {
+  return (
+    <section id="keunggulan" className="scroll-mt-28 bg-[#F7F5EF] px-5 py-24 text-[#0A3B2E] sm:px-8 lg:py-32">
+      <div className="mx-auto max-w-7xl">
+        <Reveal className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1F8A70]">Mengapa DeforTrack</p>
+          <h2 className="mt-5 text-4xl font-semibold tracking-tight sm:text-6xl">Keunggulan Kami</h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[#0A3B2E]/70 sm:text-lg">
+            Teknologi, partisipasi masyarakat, dan data lapangan untuk pengawasan hutan yang lebih baik.
+          </p>
+        </Reveal>
+        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
+          {advantages.map((advantage, index) => (
+            <Reveal key={advantage.title} className={index < 3 ? "xl:col-span-2" : "xl:col-span-3"}>
+              <article className="h-full rounded-[1.75rem] border border-[#0A3B2E]/10 bg-white/80 p-7 shadow-xl shadow-[#0A3B2E]/5 transition duration-300 hover:-translate-y-1 hover:border-[#1F8A70]/40 sm:p-8">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="flex size-14 items-center justify-center rounded-2xl bg-[#0A3B2E] text-[#F4C95D]">
+                    <advantage.icon className="size-6" aria-hidden="true" />
+                  </span>
+                  <span className="text-sm font-semibold tracking-widest text-[#0A3B2E]/40">0{index + 1}</span>
+                </div>
+                <h3 className="mt-7 text-2xl font-semibold leading-tight tracking-tight">{advantage.title}</h3>
+                <p className="mt-4 leading-7 text-[#0A3B2E]/70 [&_strong]:font-semibold [&_strong]:text-[#0A3B2E]">{advantage.description}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DeliverableCard({ item, index }: { item: Deliverable; index: number }) {
+  const isComplete = item.progress === 100;
+  const card = (
+      <motion.article
+        whileHover={{ y: -8, scale: 1.012 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}
+        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/[0.065] p-3 text-white shadow-2xl shadow-black/15 backdrop-blur-xl ${
+          item.href ? "cursor-pointer transition-colors hover:border-[#F4C95D]/35" : ""
+        }`}
+      >
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,#F4C95D,transparent)] opacity-0 transition duration-500 group-hover:opacity-80" />
+
+        <div className="relative aspect-square w-full overflow-hidden rounded-[1.3rem] border border-white/10 bg-[#F7F5EF] shadow-inner shadow-[#0A3B2E]/10">
+          {item.image ? (
+            <Image
+              src={item.image}
+              alt={`Pratinjau ${item.title}`}
+              fill
+              sizes="(min-width: 1280px) 360px, (min-width: 640px) 45vw, 90vw"
+              className="object-contain p-3 transition duration-500 group-hover:scale-[1.025]"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center [background-image:linear-gradient(rgba(10,59,46,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(10,59,46,0.045)_1px,transparent_1px)] [background-size:28px_28px]">
+              <span className="flex size-16 items-center justify-center rounded-2xl border border-[#0A3B2E]/10 bg-white text-[#1F8A70] shadow-lg shadow-[#0A3B2E]/10 transition duration-300 group-hover:-translate-y-1 group-hover:rotate-3">
+                <item.icon className="size-7" strokeWidth={1.6} aria-hidden="true" />
+              </span>
+              <span className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[#0A3B2E]/45">
+                Foto segera hadir
+              </span>
+            </div>
+          )}
+
+          <span className="absolute left-3 top-3 flex size-9 items-center justify-center rounded-xl border border-white/15 bg-[#071811]/85 text-xs font-semibold tracking-wider text-white shadow-lg backdrop-blur-md">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span
+            className="absolute right-3 top-3 inline-flex h-9 items-center gap-2 rounded-xl border border-[#F4C95D]/30 bg-[#0A3B2E]/90 px-3 text-sm font-semibold text-[#F4C95D] shadow-lg backdrop-blur-md"
+            aria-label={`Progres ${item.progress}%`}
+          >
+            <span className={`size-1.5 rounded-full ${isComplete ? "bg-[#F4C95D]" : "bg-white/70"}`} aria-hidden="true" />
+            {item.progress}%
+          </span>
+        </div>
+
+        <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.07] text-[#F4C95D]">
+              <item.icon className="size-4" strokeWidth={1.8} aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <div className="flex items-start gap-2">
+                <h4 className="text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl">
+                  {item.title}
+                </h4>
+                {item.href ? (
+                  <ArrowRight className="mt-1 size-4 shrink-0 -rotate-45 text-[#F4C95D] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                ) : null}
+              </div>
+              {item.subtitle ? (
+                <p className="mt-1.5 text-sm leading-5 text-white/50">{item.subtitle}</p>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="mt-auto pt-5">
+            <div className="mb-2 flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.16em]">
+              <span className="text-white/35">Capaian</span>
+              <span className={isComplete ? "text-[#F4C95D]" : "text-white/60"}>
+                {isComplete ? "Selesai" : "Dalam proses"}
+              </span>
+            </div>
+            <div className="h-1 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-[linear-gradient(90deg,#1F8A70,#F4C95D)] transition-all duration-700"
+                style={{ width: `${item.progress}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      </motion.article>
+  );
+
+  return (
+    <Reveal className="h-full">
+      {item.href ? (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Buka ${item.title} di tab baru`}
+          className="block h-full rounded-[1.75rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4C95D] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A3B2E]"
+        >
+          {card}
+        </a>
+      ) : card}
+    </Reveal>
+  );
+}
+
+function DeliverablesSection() {
+  return (
+    <section id="luaran" className="relative isolate scroll-mt-28 overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(31,138,112,0.3),transparent_65%),linear-gradient(180deg,#071811,transparent)]" />
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader eyebrow="Hasil karya & capaian" title="Luaran Kami" description="Dari pengembangan teknologi hingga publikasi, inilah luaran program DeforTrack untuk mendukung pengawasan dan kelestarian hutan." />
+        <div className="mt-14 space-y-14">
+          {deliverableGroups.map((group, groupIndex) => (
+            <div key={group.title}>
+              <Reveal className="mb-7 flex items-center gap-4">
+                <span className="flex size-8 items-center justify-center rounded-lg border border-[#F4C95D]/20 bg-[#F4C95D]/10 text-xs font-semibold text-[#F4C95D]">0{groupIndex + 1}</span>
+                <h3 className="text-lg font-semibold tracking-tight text-white/90 sm:text-xl">{group.title}</h3>
+                <div className="h-px flex-1 bg-white/15" />
+              </Reveal>
+              <div className={`grid gap-x-6 gap-y-8 sm:grid-cols-2 ${groupIndex === 0 ? "xl:grid-cols-4" : "xl:grid-cols-3"}`}>
+                {group.items.map((item, index) => <DeliverableCard key={item.title} item={item} index={index} />)}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -1185,7 +1344,7 @@ function Footer() {
           ))}
         </div>
         <p className="text-sm text-white/36">
-          Copyright {new Date().getFullYear()} DeforTrack.
+          Copyright {new Date().getFullYear()} Farel &amp; Kiarra.
         </p>
       </div>
     </footer>
@@ -1276,8 +1435,10 @@ export default function LandingPage() {
       <HeroStage />
       <AboutSection />
       <FeaturesSection />
+      <AdvantagesSection />
       <RoleNetworkSection />
       <WorkflowSection />
+      <DeliverablesSection />
       <TeamSection />
       <DownloadSection />
       <Footer />
