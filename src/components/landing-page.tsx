@@ -26,9 +26,6 @@ import {
 import {
   AnimatePresence,
   motion,
-  useScroll,
-  useSpring,
-  useTransform,
   type Variants,
 } from "framer-motion";
 import { ReactNode, useEffect, useRef, useState } from "react";
@@ -375,50 +372,49 @@ const team = [
     name: "Indah Ibanah, S.P., M.Si",
     role: "Supervisor",
     detail: "Dosen Agribisnis",
-    image: "/images/ibanah.webp",
+    image: "/images/optimized/ibanah.webp",
   },
   {
     name: "Faruk Umar",
     role: "Leader",
     detail: "Agribisnis '24",
-    image: "/images/faruk.webp",
+    image: "/images/optimized/faruk.webp",
   },
   {
     name: "Fadiyah Kamila A. S.",
     role: "Secretary",
     detail: "Agronomi '24",
-    image: "/images/fadiyah.webp",
+    image: "/images/optimized/fadiyah.webp",
   },
   {
     name: "Yesika Indah P.",
     role: "Finance",
     detail: "Agribisnis '24",
-    image: "/images/yesika.webp",
+    image: "/images/optimized/yesika.webp",
   },
   {
     name: "Kiarra Putri M.K.W.",
     role: "Content Planner",
     detail: "Teknologi Informasi '24",
-    image: "/images/kiarra.webp",
+    image: "/images/optimized/kiarra.webp",
   },
   {
     name: "Anugrah Farel P.F.",
     role: "Content Creator",
     detail: "Teknologi Informasi '23",
-    image: "/images/farel.webp",
+    image: "/images/optimized/farel.webp",
   },
 ];
 
 const smoothEase = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 34, filter: "blur(14px)", scale: 0.98 },
+  hidden: { opacity: 0, y: 24, scale: 0.99 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     scale: 1,
-    transition: { duration: 0.75, ease: smoothEase },
+    transition: { duration: 0.55, ease: smoothEase },
   },
 };
 
@@ -455,7 +451,7 @@ function SectionHeader({
           : "max-w-4xl text-left"
       }
     >
-      <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D] backdrop-blur-md">
+      <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
         <Sparkles className="size-3.5" aria-hidden="true" />
         {eyebrow}
       </div>
@@ -476,11 +472,11 @@ function SectionHeader({
 function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 sm:px-6">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border border-white/12 bg-[#071811]/60 px-3 py-3 text-white shadow-2xl shadow-black/20 backdrop-blur-xl sm:px-4">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border border-white/12 bg-[#071811]/95 px-3 py-3 text-white shadow-2xl shadow-black/20 sm:px-4">
         <a href="#hero" className="flex min-w-0 items-center gap-2 transition hover:-translate-y-0.5 sm:gap-3">
           <span className="flex shrink-0 items-center rounded-2xl bg-[#F7F5EF] px-3 py-2 shadow-lg shadow-black/15 ring-1 ring-white/40">
             <Image
-              src="/images/logo.png"
+              src="/images/optimized/logo.webp"
               alt="DeforTrack"
               width={180}
               height={72}
@@ -488,7 +484,7 @@ function Header() {
               className="h-9 w-auto object-contain sm:h-10"
             />
           </span>
-          <span className="inline-flex shrink-0 rounded-full border border-[#F4C95D]/30 bg-[#F4C95D]/12 px-2.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#F4C95D] shadow-lg shadow-black/10 backdrop-blur sm:px-3 sm:text-xs sm:tracking-[0.18em]">
+          <span className="inline-flex shrink-0 rounded-full border border-[#F4C95D]/30 bg-[#19352B] px-2.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#F4C95D] shadow-lg shadow-black/10 sm:px-3 sm:text-xs sm:tracking-[0.18em]">
             PKM-VGK
           </span>
         </a>
@@ -512,96 +508,84 @@ function Header() {
 }
 
 function HeroStage() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.3 });
-
-  const titleOpacity = useTransform(smoothProgress, [0, 1], [1, 1]);
-  const titleY = useTransform(smoothProgress, [0, 1], [0, 0]);
-  const imageY = useTransform(smoothProgress, [0, 1], [0, 120]);
-  const imageScale = useTransform(smoothProgress, [0, 1], [1.03, 1.12]);
   return (
-    <section ref={heroRef} id="hero" className="relative min-h-[100svh] bg-[#071811]">
+    <section id="hero" className="relative min-h-[100svh] bg-[#071811]">
       <div className="relative min-h-[100svh] overflow-hidden">
-        <motion.div style={{ y: imageY, scale: imageScale }} className="absolute -inset-4 lg:-inset-8">
+        <div className="absolute -inset-4 lg:-inset-8">
           <Image
-            src="/images/defortrack-hero.png"
+            src="/images/optimized/defortrack-hero.webp"
             alt="Drone memindai kawasan hutan dan lahan pertanian"
             fill
             priority
             sizes="100vw"
+            quality={70}
             className="object-cover object-[18%_center] sm:object-[34%_center] lg:object-[45%_center]"
           />
-        </motion.div>
+        </div>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(7,24,17,0.68)_0%,rgba(7,24,17,0.38)_48%,rgba(7,24,17,0.12)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,24,17,0.16)_0%,rgba(7,24,17,0.34)_36%,rgba(7,24,17,0.76)_66%,rgba(7,24,17,0.94)_100%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,17,0.24)_0%,rgba(7,24,17,0.03)_30%,rgba(7,24,17,0.30)_74%,#071811_100%)] lg:bg-[linear-gradient(180deg,rgba(7,24,17,0.38)_0%,rgba(7,24,17,0.06)_34%,rgba(7,24,17,0.36)_70%,#071811_100%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_42%,rgba(10,59,46,0.34),transparent_38%),radial-gradient(circle_at_76%_34%,rgba(244,201,93,0.08),transparent_22%)] lg:bg-[radial-gradient(circle_at_72%_44%,rgba(10,59,46,0.5),transparent_36%),radial-gradient(circle_at_18%_38%,rgba(244,201,93,0.08),transparent_22%)]" />
         <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-[62vw] bg-[linear-gradient(270deg,rgba(7,24,17,0.72),rgba(7,24,17,0))] lg:block" />
 
-        <motion.div
-          style={{ opacity: titleOpacity, y: titleY }}
-          className="pointer-events-auto relative z-10 flex min-h-[100svh] items-start px-5 pb-10 pt-28 sm:px-8 lg:items-center lg:pb-0"
-        >
+        <div className="pointer-events-auto relative z-10 flex min-h-[100svh] items-start px-5 pb-10 pt-28 sm:px-8 lg:items-center lg:pb-0">
           <div className="mx-auto flex w-full max-w-7xl justify-start lg:justify-end">
             <div className="max-w-4xl lg:max-w-3xl lg:text-right">
               <motion.div
-                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.8, ease: smoothEase }}
-                className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#F4C95D] backdrop-blur-xl"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: smoothEase }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-[#16332A]/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#F4C95D]"
               >
                 <Waves className="size-4" aria-hidden="true" />
                 Pantau Hutan, Jaga Masa Depan
               </motion.div>
               <motion.h1
-                initial={{ opacity: 0, y: 28, filter: "blur(12px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 0.08, duration: 0.85, ease: smoothEase }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.06, duration: 0.6, ease: smoothEase }}
                 className="mt-7 max-w-5xl text-6xl font-semibold leading-[0.88] tracking-tight text-white drop-shadow-[0_10px_36px_rgba(0,0,0,0.42)] sm:text-8xl lg:text-[8.4rem]"
               >
                 DeforTrack
               </motion.h1>
               <motion.p
-                initial={{ opacity: 0, y: 26, filter: "blur(12px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 0.16, duration: 0.85, ease: smoothEase }}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12, duration: 0.6, ease: smoothEase }}
                 className="mt-7 max-w-2xl text-lg leading-8 text-white/78 drop-shadow-[0_8px_28px_rgba(0,0,0,0.5)] sm:text-2xl sm:leading-9 lg:ml-auto"
               >
                 Sistem monitoring deforestasi dan pengelolaan lahan berbasis
                 drone, laporan petani, dan dashboard peran.
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 22, filter: "blur(12px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 0.22, duration: 0.85, ease: smoothEase }}
-                className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#F4C95D]/26 bg-[#F7F5EF]/12 p-2 text-white shadow-2xl shadow-black/30 backdrop-blur-xl lg:hidden"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.16, duration: 0.6, ease: smoothEase }}
+                className="mt-6 overflow-hidden rounded-[1.5rem] border border-[#F4C95D]/26 bg-[#16332A]/90 p-2 text-white shadow-2xl shadow-black/30 lg:hidden"
               >
                 <div className="relative aspect-video overflow-hidden rounded-[1rem]">
                   <Image
-                    src="/images/bersama.jpg"
+                    src="/images/optimized/bersama.webp"
                     alt="Foto bersama tim DeforTrack"
                     fill
                     sizes="calc(100vw - 2.5rem)"
+                    quality={65}
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_34%,rgba(7,24,17,0.76)_100%)]" />
-                  <div className="absolute bottom-3 left-3 rounded-xl border border-white/12 bg-[#071811]/58 px-3 py-2 backdrop-blur-xl">
+                  <div className="absolute bottom-3 left-3 rounded-xl border border-white/12 bg-[#071811]/90 px-3 py-2">
                     <p className="text-sm font-semibold text-white">Tim DeforTrack</p>
                   </div>
                 </div>
               </motion.div>
               <motion.div
-                initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 0.24, duration: 0.85, ease: smoothEase }}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6, ease: smoothEase }}
                 className="mt-10 flex flex-col gap-3 sm:flex-row lg:justify-end"
               >
                 <a
                   href="/survei"
-                  className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-[#F4C95D]/42 bg-[#F4C95D]/12 px-7 text-base font-semibold text-[#F4C95D] shadow-2xl shadow-black/20 backdrop-blur-xl transition hover:-translate-y-1 hover:bg-[#F4C95D] hover:text-[#0A3B2E]"
+                  className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-[#F4C95D]/42 bg-[#16332A]/90 px-7 text-base font-semibold text-[#F4C95D] shadow-2xl shadow-black/20 transition hover:-translate-y-1 hover:bg-[#F4C95D] hover:text-[#0A3B2E]"
                 >
                   <ClipboardList className="size-5 transition group-hover:-rotate-6" aria-hidden="true" />
                   Ikut Survei
@@ -615,7 +599,7 @@ function HeroStage() {
                 </a>
                 <a
                   href="#fitur"
-                  className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-white/14 bg-white/[0.06] px-7 text-base font-semibold text-white backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/12"
+                  className="group inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-white/14 bg-[#16332A]/90 px-7 text-base font-semibold text-white transition hover:-translate-y-1 hover:bg-[#1D4034]"
                 >
                   Lihat Fitur
                   <ArrowRight className="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
@@ -623,28 +607,29 @@ function HeroStage() {
               </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
           <div className="absolute bottom-24 left-4 xl:left-10 2xl:left-16">
             <motion.div
-              initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.42, duration: 0.8, ease: smoothEase }}
-              className="relative w-[min(38rem,46vw)] overflow-hidden rounded-[1.75rem] border border-[#F4C95D]/28 bg-[#F7F5EF]/12 p-2.5 text-white shadow-2xl shadow-black/30 backdrop-blur-xl"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6, ease: smoothEase }}
+              className="relative w-[min(38rem,46vw)] overflow-hidden rounded-[1.75rem] border border-[#F4C95D]/28 bg-[#16332A]/90 p-2.5 text-white shadow-2xl shadow-black/30"
             >
               <div className="absolute -inset-10 bg-[radial-gradient(circle_at_30%_80%,rgba(244,201,93,0.26),transparent_34%)]" />
               <div className="relative aspect-video overflow-hidden rounded-[1.25rem]">
                 <Image
-                  src="/images/bersama.jpg"
+                  src="/images/optimized/bersama.webp"
                   alt="Foto bersama tim DeforTrack"
                   fill
                   sizes="38rem"
+                  quality={65}
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,17,0.04)_0%,transparent_42%,rgba(7,24,17,0.78)_100%)]" />
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
-                  <div className="rounded-2xl border border-white/12 bg-[#071811]/55 px-4 py-3 backdrop-blur-xl">
+                  <div className="rounded-2xl border border-white/12 bg-[#071811]/90 px-4 py-3">
                     <p className="text-lg font-semibold text-white">
                       Tim DeforTrack
                     </p>
@@ -655,10 +640,10 @@ function HeroStage() {
           </div>
           <div className="absolute bottom-7 right-6 xl:right-10 2xl:right-16">
             <motion.div
-              initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.52, duration: 0.7 }}
-              className="w-80 rounded-2xl border border-white/14 bg-white/[0.08] p-4 text-white shadow-2xl shadow-black/20 backdrop-blur-xl"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.38, duration: 0.55 }}
+              className="w-80 rounded-2xl border border-white/14 bg-[#16332A]/95 p-4 text-white shadow-2xl shadow-black/20"
             >
               <div className="flex items-center justify-between">
                 <p className="text-xs uppercase tracking-[0.22em] text-white/46">Forest pulse</p>
@@ -669,7 +654,7 @@ function HeroStage() {
                   className="h-full rounded-full bg-[#1F8A70]"
                   initial={{ width: "18%" }}
                   animate={{ width: "76%" }}
-                  transition={{ duration: 2.6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+                  transition={{ duration: 2.6, ease: "easeOut" }}
                 />
               </div>
             </motion.div>
@@ -681,7 +666,7 @@ function HeroStage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1, duration: 0.8 }}
-          className="absolute bottom-7 left-1/2 z-30 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 backdrop-blur-xl transition hover:text-white sm:flex"
+          className="absolute bottom-7 left-1/2 z-30 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/14 bg-[#16332A]/95 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:text-white sm:flex"
         >
           Scroll
           <ArrowDown className="size-4 animate-bounce" aria-hidden="true" />
@@ -692,8 +677,10 @@ function HeroStage() {
 }
 
 function VideoSection() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
-    <section className="relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
+    <section className="deferred-section relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal className="max-w-xl">
@@ -728,19 +715,41 @@ function VideoSection() {
             <motion.div
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#0F1E18] p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-4"
+              className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#0F1E18] p-3 shadow-2xl shadow-black/30 sm:p-4"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(244,201,93,0.18),transparent_32%),radial-gradient(circle_at_70%_80%,rgba(31,138,112,0.28),transparent_30%)]" />
               <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
                 <div className="aspect-video w-full">
-                  <iframe
-                    className="h-full w-full"
-                    src="https://www.youtube.com/embed/6tC7vioROco?si=TUxRpp03AWneP29u&autoplay=1&mute=1&loop=1&playlist=6tC7vioROco&rel=0&controls=1&modestbranding=1"
-                    title="DeforTrack Video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
+                  {isPlaying ? (
+                    <iframe
+                      className="h-full w-full"
+                      src="https://www.youtube.com/embed/6tC7vioROco?autoplay=1&rel=0&controls=1&modestbranding=1"
+                      title="DeforTrack Video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsPlaying(true)}
+                      aria-label="Putar video DeforTrack"
+                      className="group/video relative h-full w-full overflow-hidden text-white"
+                    >
+                      <Image
+                        src="/images/optimized/vidioakhir.webp"
+                        alt="Pratinjau video DeforTrack"
+                        fill
+                        sizes="(min-width: 1024px) 55vw, 100vw"
+                        quality={65}
+                        className="object-cover transition duration-500 group-hover/video:scale-[1.02]"
+                      />
+                      <span className="absolute inset-0 bg-[#071811]/35 transition group-hover/video:bg-[#071811]/25" />
+                      <span className="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#F4C95D] text-[#0A3B2E] shadow-2xl shadow-black/35 transition group-hover/video:scale-110 sm:size-20">
+                        <span className="ml-1 h-0 w-0 border-y-[9px] border-l-[15px] border-y-transparent border-l-[#0A3B2E] sm:border-y-[11px] sm:border-l-[18px]" />
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -753,7 +762,7 @@ function VideoSection() {
 
 function AboutSection() {
   return (
-    <section className="relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
+    <section className="deferred-section relative bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
         <SectionHeader
           align="left"
@@ -761,7 +770,7 @@ function AboutSection() {
           title="A living data layer for forest and land operations."
           description="DeforTrack dibuat untuk membantu pemantauan wilayah hutan/lahan secara lebih terstruktur. Sistem ini menghubungkan masyarakat, petani, operator drone, Admin KPH, dan Super Admin dalam satu alur data."
         />
-        <Reveal className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-6 text-white shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8">
+        <Reveal className="rounded-[2rem] border border-white/12 bg-[#10271F] p-6 text-white shadow-2xl shadow-black/20 sm:p-8">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
               ["Drone", "Scan wilayah dan riwayat pemindaian"],
@@ -783,7 +792,7 @@ function AboutSection() {
 
 function FeaturesSection() {
   return (
-    <section id="fitur" className="relative overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
+    <section id="fitur" className="deferred-section relative overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#071811_0%,rgba(10,59,46,0.96)_36%,#0A3B2E_100%)]" />
       <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(247,245,239,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(247,245,239,0.14)_1px,transparent_1px)] [background-size:88px_88px]" />
       <div className="relative mx-auto max-w-7xl">
@@ -798,7 +807,7 @@ function FeaturesSection() {
               <motion.article
                 whileHover={{ y: -10, scale: 1.018 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="group relative min-h-72 overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/[0.07] p-6 text-white shadow-2xl shadow-black/10 backdrop-blur-xl"
+                className="group relative min-h-72 overflow-hidden rounded-[1.75rem] border border-white/12 bg-[#164B3D] p-6 text-white shadow-2xl shadow-black/10"
               >
                 <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#F4C95D,transparent)] opacity-50" />
                 <div className="flex items-start justify-between gap-6">
@@ -826,7 +835,7 @@ function FeaturesSection() {
 
 function AdvantagesSection() {
   return (
-    <section id="keunggulan" className="scroll-mt-28 bg-[#F7F5EF] px-5 py-24 text-[#0A3B2E] sm:px-8 lg:py-32">
+    <section id="keunggulan" className="deferred-section scroll-mt-28 bg-[#F7F5EF] px-5 py-24 text-[#0A3B2E] sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <Reveal className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1F8A70]">Mengapa DeforTrack</p>
@@ -862,7 +871,7 @@ function DeliverableCard({ item, index }: { item: Deliverable; index: number }) 
       <motion.article
         whileHover={{ y: -8, scale: 1.012 }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/[0.065] p-3 text-white shadow-2xl shadow-black/15 backdrop-blur-xl ${
+        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/12 bg-[#164B3D] p-3 text-white shadow-2xl shadow-black/15 ${
           item.href ? "cursor-pointer transition-colors hover:border-[#F4C95D]/35" : ""
         }`}
       >
@@ -875,6 +884,7 @@ function DeliverableCard({ item, index }: { item: Deliverable; index: number }) 
               alt={`Pratinjau ${item.title}`}
               fill
               sizes="(min-width: 1280px) 360px, (min-width: 640px) 45vw, 90vw"
+              quality={65}
               className="object-contain p-3 transition duration-500 group-hover:scale-[1.025]"
             />
           ) : (
@@ -888,11 +898,11 @@ function DeliverableCard({ item, index }: { item: Deliverable; index: number }) 
             </div>
           )}
 
-          <span className="absolute left-3 top-3 flex size-9 items-center justify-center rounded-xl border border-white/15 bg-[#071811]/85 text-xs font-semibold tracking-wider text-white shadow-lg backdrop-blur-md">
+          <span className="absolute left-3 top-3 flex size-9 items-center justify-center rounded-xl border border-white/15 bg-[#071811]/95 text-xs font-semibold tracking-wider text-white shadow-lg">
             {String(index + 1).padStart(2, "0")}
           </span>
           <span
-            className="absolute right-3 top-3 inline-flex h-9 items-center gap-2 rounded-xl border border-[#F4C95D]/30 bg-[#0A3B2E]/90 px-3 text-sm font-semibold text-[#F4C95D] shadow-lg backdrop-blur-md"
+            className="absolute right-3 top-3 inline-flex h-9 items-center gap-2 rounded-xl border border-[#F4C95D]/30 bg-[#0A3B2E]/95 px-3 text-sm font-semibold text-[#F4C95D] shadow-lg"
             aria-label={`Progres ${item.progress}%`}
           >
             <span className={`size-1.5 rounded-full ${isComplete ? "bg-[#F4C95D]" : "bg-white/70"}`} aria-hidden="true" />
@@ -957,7 +967,7 @@ function DeliverableCard({ item, index }: { item: Deliverable; index: number }) 
 
 function DeliverablesSection() {
   return (
-    <section id="luaran" className="relative isolate scroll-mt-28 overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
+    <section id="luaran" className="deferred-section relative isolate scroll-mt-28 overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(31,138,112,0.3),transparent_65%),linear-gradient(180deg,#071811,transparent)]" />
       <div className="mx-auto max-w-7xl">
         <SectionHeader eyebrow="Hasil karya & capaian" title="Luaran Kami" description="Dari pengembangan teknologi hingga publikasi, inilah luaran program DeforTrack untuk mendukung pengawasan dan kelestarian hutan." />
@@ -1056,7 +1066,7 @@ function RoleNetworkSection() {
   }, []);
 
   return (
-    <section id="role" className="relative overflow-hidden bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
+    <section id="role" className="deferred-section relative overflow-hidden bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           eyebrow="Role network"
@@ -1064,8 +1074,8 @@ function RoleNetworkSection() {
           description="Setiap pengguna memiliki akses sesuai tugasnya, mulai dari laporan masyarakat dan petani, pemindaian drone, pengelolaan wilayah KPH, hingga pengawasan seluruh sistem."
         />
         <Reveal className="mt-16">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl md:hidden">
-            <div className="relative z-10 mx-auto flex w-48 flex-col items-center rounded-[1.5rem] border border-[#F4C95D]/30 bg-[#F4C95D]/12 p-5 text-center text-white shadow-2xl shadow-[#F4C95D]/10 backdrop-blur-xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#10271F] p-5 shadow-2xl shadow-black/20 md:hidden">
+            <div className="relative z-10 mx-auto flex w-48 flex-col items-center rounded-[1.5rem] border border-[#F4C95D]/30 bg-[#204536] p-5 text-center text-white shadow-2xl shadow-[#F4C95D]/10">
               <Layers3 className="size-7 text-[#F4C95D]" aria-hidden="true" />
               <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/54">Core data</p>
               <p className="mt-1 text-2xl font-semibold">DeforTrack</p>
@@ -1074,11 +1084,11 @@ function RoleNetworkSection() {
               {roles.map((role, index) => (
                 <motion.article
                   key={role.title}
-                  initial={{ opacity: 0, y: 22, filter: "blur(12px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.35 }}
                   transition={{ delay: index * 0.08, duration: 0.58, ease: smoothEase }}
-                  className="rounded-[1.35rem] border border-white/12 bg-[#2f4038]/95 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl"
+                  className="rounded-[1.35rem] border border-white/12 bg-[#2f4038] p-5 text-white shadow-2xl shadow-black/20"
                 >
                   <div className="flex items-center gap-3">
                     <span className="flex size-11 items-center justify-center rounded-2xl bg-[#1F8A70] text-white">
@@ -1094,7 +1104,7 @@ function RoleNetworkSection() {
 
           <div
             ref={networkRef}
-            className="relative mx-auto hidden min-h-[620px] max-w-6xl overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 md:block"
+            className="relative mx-auto hidden min-h-[620px] max-w-6xl overflow-hidden rounded-[2rem] border border-white/12 bg-[#10271F] p-5 shadow-2xl shadow-black/20 sm:p-8 md:block"
           >
             <svg
               className="pointer-events-none absolute inset-0 h-full w-full"
@@ -1118,7 +1128,7 @@ function RoleNetworkSection() {
                 />
               ))}
             </svg>
-            <div ref={coreRef} className="absolute left-1/2 top-1/2 z-20 flex size-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#F4C95D]/30 bg-[#F4C95D]/12 p-6 text-center text-white shadow-2xl shadow-[#F4C95D]/10 backdrop-blur-xl">
+            <div ref={coreRef} className="absolute left-1/2 top-1/2 z-20 flex size-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#F4C95D]/30 bg-[#204536] p-6 text-center text-white shadow-2xl shadow-[#F4C95D]/10">
               <Layers3 className="size-8 text-[#F4C95D]" aria-hidden="true" />
               <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/54">Role Data</p>
               <p className="mt-1 text-2xl font-semibold">DeforTrack</p>
@@ -1129,12 +1139,12 @@ function RoleNetworkSection() {
                   roleCardRefs.current[index] = node;
                 }}
                 key={role.title}
-                initial={{ opacity: 0, scale: 0.82, filter: "blur(14px)" }}
-                whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.45 }}
                 whileHover={{ y: -8, scale: 1.03 }}
                 transition={{ delay: index * 0.05, type: "spring", stiffness: 220, damping: 22 }}
-                className={`absolute z-30 w-[18rem] rounded-[1.5rem] border border-white/12 bg-[#2f4038]/95 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-xl ${role.position}`}
+                className={`absolute z-30 w-[18rem] rounded-[1.5rem] border border-white/12 bg-[#2f4038] p-5 text-white shadow-2xl shadow-black/20 ${role.position}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="flex size-11 items-center justify-center rounded-2xl bg-[#1F8A70] text-white">
@@ -1154,7 +1164,7 @@ function RoleNetworkSection() {
 
 function WorkflowSection() {
   return (
-    <section id="alur" className="relative bg-[#F7F5EF] px-5 py-24 text-[#0A3B2E] sm:px-8 lg:py-32">
+    <section id="alur" className="deferred-section relative bg-[#F7F5EF] px-5 py-24 text-[#0A3B2E] sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <Reveal className="max-w-4xl">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1F8A70]">Animated workflow</p>
@@ -1194,11 +1204,11 @@ function WorkflowSection() {
             {workflow.map((step, index) => (
               <motion.article
                 key={step.title}
-                initial={{ opacity: 0, y: 34, filter: "blur(12px)" }}
-                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ delay: index * 0.08, duration: 0.65, ease: smoothEase }}
-                className="relative rounded-[1.5rem] border border-[#0A3B2E]/10 bg-white/70 p-5 shadow-xl shadow-[#0A3B2E]/5 backdrop-blur-xl"
+                className="relative rounded-[1.5rem] border border-[#0A3B2E]/10 bg-white p-5 shadow-xl shadow-[#0A3B2E]/5"
               >
                 <motion.div
                   whileHover={{ scale: 1.08, rotate: 4 }}
@@ -1224,7 +1234,7 @@ function TeamSection() {
   const teamRows = [team.slice(0, 1), team.slice(1, 3), team.slice(3, 6)];
 
   return (
-    <section id="tim" className="bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
+    <section id="tim" className="deferred-section bg-[#071811] px-5 py-24 sm:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           eyebrow="Team signal"
@@ -1243,7 +1253,7 @@ function TeamSection() {
                     <motion.article
                       whileHover={{ y: -9, scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                      className={`rounded-[1.5rem] border border-white/12 bg-white/[0.06] p-4 text-white shadow-2xl shadow-black/12 backdrop-blur-xl ${
+                      className={`rounded-[1.5rem] border border-white/12 bg-[#10271F] p-4 text-white shadow-2xl shadow-black/12 ${
                         rowIndex === 0 ? "mx-auto max-w-sm border-[#F4C95D]/28 bg-[#F4C95D]/8" : ""
                       }`}
                     >
@@ -1252,6 +1262,8 @@ function TeamSection() {
                         alt={`Foto placeholder ${member.name}`}
                         width={320}
                         height={320}
+                        quality={70}
+                        sizes="(min-width: 1024px) 20rem, (min-width: 640px) 50vw, 100vw"
                         className="aspect-square w-full rounded-[1.1rem] object-cover"
                       />
                       <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
@@ -1275,14 +1287,14 @@ function TeamSection() {
 
 function DownloadSection() {
   return (
-    <section id="download" className="relative overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
+    <section id="download" className="deferred-section relative overflow-hidden bg-[#0A3B2E] px-5 py-24 sm:px-8 lg:py-32">
       <div className="absolute inset-0 bg-[linear-gradient(135deg,#071811_0%,#0A3B2E_54%,#1F8A70_130%)]" />
       <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(120deg,transparent_0%,rgba(244,201,93,0.22)_48%,transparent_70%)]" />
       <Reveal className="relative mx-auto max-w-6xl">
         <motion.div
           whileHover={{ scale: 1.006 }}
           transition={{ type: "spring", stiffness: 180, damping: 24 }}
-          className="grid overflow-hidden rounded-[2.4rem] border border-white/14 bg-white/[0.08] shadow-2xl shadow-black/24 backdrop-blur-2xl lg:grid-cols-[1.1fr_0.9fr]"
+          className="grid overflow-hidden rounded-[2.4rem] border border-white/14 bg-[#164B3D] shadow-2xl shadow-black/24 lg:grid-cols-[1.1fr_0.9fr]"
         >
           <div className="p-7 text-white sm:p-10 lg:p-14">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#F4C95D]/28 bg-[#F4C95D]/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F4C95D]">
@@ -1311,11 +1323,7 @@ function DownloadSection() {
             </div>
           </div>
           <div className="relative min-h-[300px] overflow-hidden border-t border-white/10 bg-[#F7F5EF]/8 sm:min-h-[440px] lg:border-l lg:border-t-0">
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-1/2 top-1/2 aspect-[780/1600] w-[min(9rem,39vw)] -translate-x-1/2 -translate-y-1/2 rounded-[1.55rem] border border-white/18 bg-[#071811] p-1.5 shadow-2xl shadow-black/40 sm:w-[min(15.5rem,66vw)] sm:rounded-[2.5rem] sm:p-2.5"
-            >
+            <div className="absolute left-1/2 top-1/2 aspect-[780/1600] w-[min(9rem,39vw)] -translate-x-1/2 -translate-y-1/2 rounded-[1.55rem] border border-white/18 bg-[#071811] p-1.5 shadow-2xl shadow-black/40 sm:w-[min(15.5rem,66vw)] sm:rounded-[2.5rem] sm:p-2.5">
               <div className="relative h-full overflow-hidden rounded-[1.25rem] border border-white/12 bg-[#071811] sm:rounded-[2rem]">
                 <Image
                   src="/images/aplikasi.jpg?v=2"
@@ -1327,7 +1335,7 @@ function DownloadSection() {
                 />
                 <div className="absolute left-1/2 top-2 h-1 w-10 -translate-x-1/2 rounded-full bg-black/35 ring-1 ring-white/10 sm:top-3 sm:h-1.5 sm:w-16" />
               </div>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </Reveal>
@@ -1339,7 +1347,7 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#071811] px-5 py-10 text-white sm:px-8">
       <div className="mx-auto mb-10 max-w-7xl">
-        <div className="flex flex-col gap-4 rounded-[1.6rem] border border-white/12 bg-[#F7F5EF]/[0.035] p-4 shadow-2xl shadow-black/20 backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-4 rounded-[1.6rem] border border-white/12 bg-[#10271F] p-4 shadow-2xl shadow-black/20 lg:flex-row lg:items-center lg:justify-between">
           <a
             href="https://www.instagram.com/defortrack"
             target="_blank"
@@ -1384,7 +1392,7 @@ function Footer() {
         <div>
           <div className="inline-flex items-center rounded-2xl bg-[#F7F5EF] px-4 py-3 shadow-xl shadow-black/20 ring-1 ring-white/30">
             <Image
-              src="/images/logo.png"
+              src="/images/optimized/logo.webp"
               alt="DeforTrack"
               width={220}
               height={88}
@@ -1427,7 +1435,7 @@ function InitialLoader() {
 
   useEffect(() => {
     const startedAt = performance.now();
-    const minDuration = 1700;
+    const minDuration = 650;
 
     const finish = () => {
       const elapsed = performance.now() - startedAt;
@@ -1441,7 +1449,7 @@ function InitialLoader() {
       window.addEventListener("load", finish, { once: true });
     }
 
-    const fallback = window.setTimeout(finish, 2600);
+    const fallback = window.setTimeout(finish, 1500);
 
     return () => {
       window.removeEventListener("load", finish);
@@ -1454,25 +1462,25 @@ function InitialLoader() {
       {isVisible ? (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: "blur(12px)" }}
-          transition={{ duration: 0.65, ease: smoothEase }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, ease: smoothEase }}
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#071811] px-6 text-white"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(31,138,112,0.34),transparent_34%),linear-gradient(180deg,#071811_0%,#0A3B2E_100%)]" />
           <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(247,245,239,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(247,245,239,0.16)_1px,transparent_1px)] [background-size:64px_64px]" />
           <motion.div
-            initial={{ opacity: 0, y: 22, scale: 0.94, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.75, ease: smoothEase }}
+            initial={{ opacity: 0, y: 16, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.45, ease: smoothEase }}
             className="relative flex flex-col items-center"
           >
             <motion.div
               animate={{ y: [0, -8, 0], scale: [1, 1.025, 1] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2.4, repeat: 1, ease: "easeInOut" }}
               className="flex items-center justify-center rounded-[2rem] bg-[#F7F5EF] px-7 py-5 shadow-2xl shadow-black/30 ring-1 ring-white/50 sm:rounded-[2.4rem] sm:px-9 sm:py-6"
             >
               <Image
-                src="/images/logo.png"
+                src="/images/optimized/logo.webp"
                 alt="DeforTrack"
                 width={260}
                 height={104}
@@ -1484,7 +1492,7 @@ function InitialLoader() {
               <motion.div
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 1.1, repeat: 1, ease: "easeInOut" }}
                 className="h-full w-1/2 rounded-full bg-[#F4C95D]"
               />
             </div>

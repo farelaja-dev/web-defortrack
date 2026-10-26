@@ -49,21 +49,21 @@ export const deliverableGroups: { title: string; items: Deliverable[] }[] = [
   {
     title: "Dokumentasi & Pelaporan",
     items: [
-      { title: "Video Akhir", progress: 100, icon: Play, image: "/images/vidioakhir.png.png", href: "https://youtu.be/6tC7vioROco?feature=shared" },
-      { title: "Media Sosial DeforTrack", progress: 100, icon: UsersRound, image: "/images/sosialmedia.png.png" },
-      { title: "Laporan Kemajuan", progress: 100, icon: FileText, image: "/images/laporankemajuan.png.png", href: "https://bit.ly/LaporanKemajuanDeforTrack" },
-      { title: "Laporan Akhir", progress: 100, icon: FileCheck2, image: "/images/laporanakhir.png.png", href: "https://bit.ly/LaporanAkhirDefortrack" },
+      { title: "Video Akhir", progress: 100, icon: Play, image: "/images/optimized/vidioakhir.webp", href: "https://youtu.be/6tC7vioROco?feature=shared" },
+      { title: "Media Sosial DeforTrack", progress: 100, icon: UsersRound, image: "/images/optimized/sosialmedia.webp" },
+      { title: "Laporan Kemajuan", progress: 100, icon: FileText, image: "/images/optimized/laporankemajuan.webp", href: "https://bit.ly/LaporanKemajuanDeforTrack" },
+      { title: "Laporan Akhir", progress: 100, icon: FileCheck2, image: "/images/optimized/laporanakhir.webp", href: "https://bit.ly/LaporanAkhirDefortrack" },
     ],
   },
   {
     title: "Produk & Publikasi",
     items: [
-      { title: "Website", progress: 100, icon: Globe, image: "/images/website.png", href: "https://bit.ly/WebsiteDeforTrack" },
-      { title: "Aplikasi Mobile", progress: 100, icon: Smartphone, image: "/images/aplikasi.png.png", href: "https://bit.ly/AplikasiDeforTrack" },
-      { title: "Manual Book", progress: 100, icon: BookOpen, image: "/images/manualbook.png.png", href: "https://bit.ly/ManualBookDeforTrack" },
-      { title: "Artikel Media Massa", progress: 100, icon: Newspaper, image: "/images/artikel.png.png", href: "https://unej.ac.id/blog/2026/09/08/atasi-ancaman-deforestasi-mahasiswa-unej-gagas-defortrack-inovasi-pemantauan-hutan-berbasis-drone-lidar-dan-skema-insentif-masyarakat/" },
-      { title: "HKI", subtitle: "Manual Book, Aplikasi, dan Video", progress: 100, icon: Medal, image: "/images/hki.png.png", href: "https://bit.ly/HKIDeforTrack" },
-      { title: "Policy Brief", progress: 100, icon: FileText, image: "/images/policybrief.png.png", href: "https://drive.google.com/file/d/1pDC4Fl843fTsStbEtNg7ijoPX-O71-J_/view?usp=sharing" },
+      { title: "Website", progress: 100, icon: Globe, image: "/images/optimized/website.webp", href: "https://bit.ly/WebsiteDeforTrack" },
+      { title: "Aplikasi Mobile", progress: 100, icon: Smartphone, image: "/images/optimized/aplikasi.webp", href: "https://bit.ly/AplikasiDeforTrack" },
+      { title: "Manual Book", progress: 100, icon: BookOpen, image: "/images/optimized/manualbook.webp", href: "https://bit.ly/ManualBookDeforTrack" },
+      { title: "Artikel Media Massa", progress: 100, icon: Newspaper, image: "/images/optimized/artikel.webp", href: "https://unej.ac.id/blog/2026/09/08/atasi-ancaman-deforestasi-mahasiswa-unej-gagas-defortrack-inovasi-pemantauan-hutan-berbasis-drone-lidar-dan-skema-insentif-masyarakat/" },
+      { title: "HKI", subtitle: "Manual Book, Aplikasi, dan Video", progress: 100, icon: Medal, image: "/images/optimized/hki.webp", href: "https://bit.ly/HKIDeforTrack" },
+      { title: "Policy Brief", progress: 100, icon: FileText, image: "/images/optimized/policybrief.webp", href: "https://drive.google.com/file/d/1pDC4Fl843fTsStbEtNg7ijoPX-O71-J_/view?usp=sharing" },
     ],
   },
 ];
